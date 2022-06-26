@@ -1,0 +1,17 @@
+#!/bin/bash
+getBloatware() {
+    array=() # Create array
+    while IFS= read -r line # Read a line
+    do
+        array+=("$line") # Append line to the array
+    done < "$1"
+}
+
+
+getBloatware "bloatware.txt"
+
+for line in "${array[@]}"
+do
+    adb shell pm uninstall -k --user 0 "$line"
+done
+
